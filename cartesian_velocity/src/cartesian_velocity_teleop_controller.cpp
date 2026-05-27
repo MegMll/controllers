@@ -20,7 +20,7 @@ namespace cartesian_velocity_controller
   {
     controller_interface::InterfaceConfiguration config;
     config.type = controller_interface::interface_configuration_type::INDIVIDUAL;
-    
+
     config.names = robot_vel_interface_->get_commands_names();
     return config;
   }
@@ -55,6 +55,7 @@ namespace cartesian_velocity_controller
     declare_and_get_parameters("input_twist_frame", input_twist_frame_, std::string("base"));
     declare_and_get_parameters("robot_type", robot_type_, std::string("franka_velocity"));
     declare_and_get_parameters("command_names", command_names_, std::vector<std::string>{});
+    declare_and_get_parameters("excluded_joints", excluded_joints_, std::vector<std::string>{});
   }
 
   void CartesianVelocityTeleopController::declareSubscribers()
@@ -83,7 +84,7 @@ namespace cartesian_velocity_controller
     robot_vel_interface_ = robot_interfaces::create_robot_component(robot_type_);
     if (!robot_vel_interface_ ||
         !robot_vel_interface_->initKinematics(robot_description,
-                                              node->get_parameter("tool_frame").as_string()))
+                                              node->get_parameter("tool_frame").as_string(), excluded_joints_))
     {
       RCLCPP_ERROR(node->get_logger(), "Failed to initialize robot interface.");
       return false;
@@ -158,7 +159,7 @@ namespace cartesian_velocity_controller
       const rclcpp::Time & /*time*/, const rclcpp::Duration &period)
   {
     robot_vel_interface_->syncState();
-    
+
     typedef extender_msgs::msg::TeleopCommand Mode;
     // Get current EE pose.
     robot_interfaces::CartesianPosition temp_pose =

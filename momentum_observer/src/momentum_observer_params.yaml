@@ -1,0 +1,42 @@
+generalized_momentum_observer:
+  admittance_gain: {
+    type: double,
+    default_value: 1.0,
+    description: "velocity gain"
+  }
+  observer_gains: {
+      type: double_array,
+      default_value: [0.0, 0.45, 0.60],
+      description: "Diagonal of the observer matrix gains"
+    }
+  force_threshold: {
+    type: double,
+    default_value: 1.0,
+    description: "Force deadband threshold (N) - raise threshold to activate force control"
+  }
+  torque_threshold: {
+    type: double,
+    default_value: 1.0,
+    description: "Torque deadband threshold (Nm) - raise threshold to activate torque control"
+  }
+  sensors_gravity_comp: {
+    type: int,
+    default_value: -1,
+    description: "Sensors direction of gravity compensation"
+  }
+  admittance_active: {
+    type: bool,
+    default_value: true,
+    description : "Activate or not the compliance of the robot"
+  }
+  lpf_alpha: {
+    type: double, 
+    default_value: 0.1,
+    description: "Low pass filter coefficient"
+  }
+  bias_alpha: {
+    type : double,
+    default_value: 0.005,
+    description: "Forget coefficient of dynamic model imprecision"
+  }
+

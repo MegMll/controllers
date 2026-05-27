@@ -1,0 +1,9 @@
+<library path="momentum_observer">
+  <class name="cartesian_velocity_controller/GeneralizedMomentumObserver"
+         type="cartesian_velocity_controller::GeneralizedMomentumObserver"
+         base_class_type="controller_interface::ChainableControllerInterface">
+    <description>
+    A momentum observer to implement a transparent mode.
+    </description>
+  </class>
+</library>

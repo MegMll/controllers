@@ -120,5 +120,7 @@ namespace cartesian_velocity_controller
 
     std::vector<std::string> command_names_;
     std::string robot_type_{"franka_velocity"};
+    std::vector<std::string> excluded_joints_;
+
   };
 } // namespace cartesian_velocity_controller
